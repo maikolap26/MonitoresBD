@@ -3,14 +3,16 @@ package monitores;
 import Conexión.DB;
 import File.Transaccion;
 import File.WriteFile;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -31,8 +33,10 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DatasetUtilities;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.RefineryUtilities;
 
 public class Monitores extends JFrame {
@@ -47,39 +51,69 @@ public class Monitores extends JFrame {
     JTable table;
     int numTS;
     String nameTS;
-    static Double SGA = 1068937216.0 / 1024;
-    static Double HWS = 0.50;
+    static Double SGA = 1068937216.0 / 1024 / 1024;
+    static Double HWS = 0.90;
     static String[] col = {"Usuario", "SQL", "Fecha", "Memoria", "Tiempo de ejecución"};
     static Object[][] rows = {};
     static String[] columnNames = {"Table Space", "Days to HWM (Blue)", "Days to full (Red)"};
-    public static DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
+    public static XYSeriesCollection dataset1 = new XYSeriesCollection();
 
     public Monitores(String titel) {
         this.ventana = new JFrame(titel);
-        ventana.setLayout(new BorderLayout());
+        initComponents();
         createMenu();
-        dataset = createDataset();
-        chart = createChart(dataset);
-        chartPanel = new ChartPanel(chart);
-        panel = new JPanel();
-        chartPanel.setPreferredSize(new Dimension(500, 350));
-        panel.add(chartPanel);
-        panel.setBackground(Color.white);
-        ventana.add(panel, BorderLayout.LINE_START);
-        ventana.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        ventana.setResizable(false);
         addTable();
         /*Monitor de linea*/
-        JFreeChart lineChart = ChartFactory.createLineChart(
-                "Grafico",
+    }
+
+    private void initComponents() {
+        ventana.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        JFreeChart lineChart = ChartFactory.createXYLineChart(
+                "SGA Consumo",
                 "Tiempo", "Memoria",
                 createDataset1(),
                 PlotOrientation.VERTICAL,
                 true, true, false);
 
         ChartPanel chartPanel1 = new ChartPanel(lineChart);
-        chartPanel1.setPreferredSize(new java.awt.Dimension(560, 367));
-        setContentPane(chartPanel1);
+        chartPanel1.setPreferredSize(new Dimension(680, 400));
+        //setContentPane(chartPanel1);
+
+        JPanel p = new JPanel();
+        p.setBackground(Color.WHITE);
+        //p.setSize(340, 280);
+        p.add(chartPanel1);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        //c.anchor = GridBagConstraints.LINE_START;
+        c.weightx = 0.1;
+        c.weighty = 0.0;
+        c.ipady = 400;
+        c.ipadx = 400;
+        c.gridx = 1;
+        c.gridy = 1;
+        c.insets = new Insets(0, 0, 0, 0);
+        //pane.add(button, c);
+        ventana.add(p, c);
+        //----------------------------------------------
+
+        dataset = createDataset();
+        chart = createChart(dataset);
+        chartPanel = new ChartPanel(chart);
+        panel = new JPanel();
+        chartPanel.setPreferredSize(new Dimension(670, 400));
+        panel.add(chartPanel);
+        panel.setBackground(Color.WHITE);
+        //panel.setBackground(Color.white);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        //c.weightx = 0.5;
+        //c.anchor = GridBagConstraints.LAST_LINE_START;
+        c.gridx = 2;
+        c.gridy = 1;
+        panel.setSize(280, 280);
+        ventana.add(panel, c);
+        ventana.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //ventana.setResizable(false);
     }
 
     private void createMenu() {
@@ -100,7 +134,7 @@ public class Monitores extends JFrame {
             });
             menu1.add(it);
         }
-        
+
         menuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -118,20 +152,51 @@ public class Monitores extends JFrame {
         menu.add(menuItem);
         menuBar.add(menu);
         menuBar.add(menu1);
-        ventana.add(menuBar, BorderLayout.PAGE_START);
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        c.gridwidth = 8;
+        //c.weightx = 0.1;
+        c.ipady = 40;
+        c.gridx = 0;
+        c.gridy = 0;
+        ventana.add(menuBar, c);
     }
 
     private void addTable() {
+        GridBagConstraints c = new GridBagConstraints();
         Object[][] data = {};
         table = new JTable(data, columnNames);
         JScrollPane scrollPane = new JScrollPane(table);
         ArrayList<Object[]> array = db.getDays(-1.0);
         table.setModel(agregaRows(array));
+        table.setSize(new Dimension(680, 400));
         panel2 = new JPanel();
         panel2.add(scrollPane);
         panel2.setBackground(Color.white);
-        ventana.add(panel2, BorderLayout.LINE_END);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        //c.anchor = GridBagConstraints.LINE_END;
+        c.ipady = 250;
+        c.ipadx = 200;
+        //c.weightx= 0.1;
+        c.weighty = 0.1;
+        //c.gridwidth= 6;
+        c.gridx = 2;
+        c.gridy = 2;
+        ventana.add(panel2, c);
+        c.gridx = 1;
+        c.gridy = 2;
+        tabla = new JTable(rows, col);
+        tabla.setSize(new Dimension(680, 400));
+        //ventana.setSize(650, 300);
+        JPanel pan = new JPanel();
+        pan.add(new JScrollPane(tabla));
+        pan.setBackground(Color.WHITE);
+        ventana.add(pan, c);
+        ventana.setBackground(Color.WHITE);
+
     }
+    private JTable tabla;
 
     public static DefaultTableModel agregaRows(ArrayList<Object[]> l) {
         DefaultTableModel model = new DefaultTableModel(new Object[][]{}, columnNames);
@@ -185,24 +250,38 @@ public class Monitores extends JFrame {
 
     private JFreeChart createChart(final CategoryDataset dataset) {
         final JFreeChart chart = ChartFactory.createStackedBarChart(
-                "Stacked Bar Chart ", "", "",
+                "TableSpaces ", "", "",
                 dataset, PlotOrientation.HORIZONTAL, true, true, false);
-
 //        chart.setBackgroundPaint(new Color(100, 100, 100));
         CategoryPlot plot = chart.getCategoryPlot();
         plot.getRenderer().setSeriesPaint(0, new Color(38, 201, 56));
         plot.getRenderer().setSeriesPaint(1, new Color(90, 98, 221));
         plot.getRenderer().setSeriesPaint(2, new Color(241, 48, 48));
-
         return chart;
     }
 
     /*Datos grafica linea*/
-    public DefaultCategoryDataset createDataset1() {
-        dataset1.addValue(700, "Gasto de memoria", "0");
-        dataset1.addValue(0, "Gasto de memoria", "0");
+    public XYDataset createDataset1() {
+        
+        HWMG.add(1, Double.valueOf(HWS * SGA));
+        HWMG.add(2, Double.valueOf(HWS * SGA));
+        HWMG.add(3, Double.valueOf(HWS * SGA));
+        HWMG.add(4, Double.valueOf(HWS * SGA));
+        HWMG.add(5, Double.valueOf(HWS * SGA));
+        HWMG.add(6, Double.valueOf(HWS * SGA));
+        HWMG.add(7, Double.valueOf(HWS * SGA));
+        HWMG.add(8, Double.valueOf(HWS * SGA));
+        HWMG.add(9, Double.valueOf(HWS * SGA));
+        HWMG.add(10, Double.valueOf(HWS * SGA));
+        HWMG.setMaximumItemCount(10);
+        SGAM.setMaximumItemCount(10);
+        dataset1.addSeries(HWMG);
+        dataset1.addSeries(SGAM);
         return dataset1;
     }
+
+    static XYSeries SGAM = new XYSeries("SGA");
+    static XYSeries HWMG = new XYSeries("HWM");
 
     public static DefaultTableModel agregaRows1(ArrayList<Alerta> l) {
         DefaultTableModel model = new DefaultTableModel(new Object[][]{}, col);
@@ -225,7 +304,7 @@ public class Monitores extends JFrame {
             System.err.println(e.getMessage());
         }
 
-        Monitores demo = new Monitores("Stacked Bar Chart");
+        Monitores demo = new Monitores("TableSpaces");
         demo.ventana.pack();
         RefineryUtilities.centerFrameOnScreen(demo.ventana);
         demo.ventana.setVisible(true);
@@ -236,29 +315,34 @@ public class Monitores extends JFrame {
             System.out.println(s.toString());
         }
         /*Ventana de grafico de linea */
-        JFrame ventana = new JFrame("Alertas");
-        JTable tabla = new JTable(rows, col);
-        ventana.setSize(650, 300);
-        ventana.add(new JPanel().add(new JScrollPane(tabla)));
-        ventana.setVisible(true);
+        //JFrame ventana = new JFrame("Alertas");
+
+        //ventana.setVisible(true);
         demo.pack();
         RefineryUtilities.centerFrameOnScreen(demo);
-        demo.setVisible(true);
+        //demo.setVisible(true);
         DB d = new DB();
         ArrayList<Alerta> alert = WriteFile.read1();
-        tabla.setModel(agregaRows1(alert));
+        demo.tabla.setModel(agregaRows1(alert));
         Integer x = 5000;
         Integer y = 1;
+        Calendar calendario = Calendar.getInstance();
         Double memoriaSGA = 0.0;
         while (true) {
             try {
-                memoriaSGA = d.consultaMemSGA();
+                memoriaSGA = d.consultaMemSGA() / 1024;
                 if ((HWS * SGA) <= memoriaSGA) {
                     d.consulta();
                     alert = WriteFile.read1();
-                    tabla.setModel(agregaRows1(alert));
+                    demo.tabla.setModel(agregaRows1(alert));
                 }
-                dataset1.addValue(memoriaSGA, "Gasto de memoria", String.valueOf(y++));
+                //calendario.get(Calendar.DATE);
+                //HWMG.addOrUpdate(y, Double.valueOf(HWS * SGA));
+                if(y>10)
+                    HWMG.addOrUpdate(y, Double.valueOf(HWS * SGA));
+                SGAM.add(y, memoriaSGA);
+                y++;
+                //dataset1.addValue(HWS * SGA, "Gasto de memoria", y);
                 demo.repaint();
                 sleep(1000);
             } catch (InterruptedException ex) {

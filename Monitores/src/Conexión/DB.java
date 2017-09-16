@@ -47,8 +47,8 @@ public class DB {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             Properties info = new Properties();
-            info.setProperty("user", "maikol");
-            info.setProperty("password", "maikol");
+            info.setProperty("user", "alex");
+            info.setProperty("password", "alex");
             //info.setProperty("internal_logon","sysdba");
             conexion = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", info);
             if (conexion != null) {
