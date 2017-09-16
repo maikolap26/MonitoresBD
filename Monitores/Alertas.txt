@@ -1,0 +1,46 @@
+ALEX;SELECT SE.USERNAME, SQ.SQL_TEXT, SQ.FIRST_LOAD_TIME, SQ.SHARABLE_MEM, SQ.ELAPSED_TIME FROM V$SQL SQ, V$SESSION SE WHERE FIRST_LOAD_TIME=(SELECT MAX(FIRST_LOAD_TIME) FROM V$SQL) AND SQ.PARSING_USER_ID = SE.USER#;2017-09-01/00:20:18;48219;15725
+PROYECTO;select * from USER_ROLE_PRIVS;2017-09-01/00:21:29;64310;281244
+ALEX;select * from v$session;2017-09-01/04:52:13;125088;59248
+PROYECTO;select sysdate from dual ;2017-09-01/16:48:39;.0149;.0011
+PROYECTO;select sysdate from dual ;2017-09-01/16:48:39;.0149;.0011
+PROYECTO;select sysdate from dual ;2017-09-01/16:48:39;.0149;.0011
+PROYECTO;select sysdate from dual ;2017-09-01/16:48:39;.0149;.0011
+PROYECTO;select sysdatE from dual;2017-09-01/16:59:04;.0149;.001
+PROYECTO;select sysdatE from dual;2017-09-01/16:59:04;.0149;.001
+PROYECTO;select sysdatE from dual;2017-09-01/16:59:04;.0149;.001
+PROYECTO;select sysdatE from dual;2017-09-01/16:59:04;.0149;.001
+PROYECTO;sElECT * from t1;2017-09-01/17:15:30;.0149;.0142
+null;SELECT PARAM_ID, AUDIT_TRAIL_TYPE#, NUMBER_VALUE, STRING_VALUE  FROM SYS.DAM_CONFIG_PARAM$  WHERE PARAM_ID = 17 AND  (AUDIT_TRAIL_TYPE# = 4 OR AUDIT_TRAIL_TYPE# = 12 OR AUDIT_TRAIL_TYPE# = 15);2017-09-01/17:18:33;.0189;.0018
+null;select sysdate from dual;2017-09-01/17:19:59;.0149;.001
+null;select inst_id,kglnaobj,kglfnobj,kglobt03, kglobhs0+kglobhs1+kglobhs2+kglobhs3+kglobhs4+kglobhs5+kglobhs6+kglobt16, kglobt08+kglobt11, kglobt10, kglobt01, decode(kglobhs6,0,0,1), decode(kglhdlmd,0,0,1), kglhdlkc, kglobt04, kglobt05, kglobt48, kglobt35, kglobpc6, kglhdldc, substr(to_char(kglnatim,'YYYY-MM-DD/HH24:MI:SS'),1,19), kglhdivc, kglobt12, kglobt13, kglobwdw, kglobt14, kglobwap, kglobwcc, kglobwcl, kglobwui, kglobt42, kglobt43, kglobt15, kglobt02, decode(kglobt32,        0, 'NONE',        1, 'ALL_ROWS',        2, 'FIRST_ROWS',        3, 'RULE',        4, 'CHOOSE',           'UNKNOWN'), kglobtn0, kglobcce, kglobcceh, kglobt17, kglobt18, kglobts4, kglhdkmk, kglhdpar, kglobtp0, kglnahsh, kglobt46, kglobt30, kglobt09, kglobts5, kglobt48, kglobts0, kglobt19, kglobts1, kglobt20, kglobt21, kglobts2, kglobt06, kglobt07, decode(kglobt28, 0, to_number(NULL), kglobt28), kglhdadr, kglobt29, decode(bitand(kglobt00,64),64, 'Y', 'N'), decode(kglobsta,        1, 'VALID',        2, 'VALID_AUTH_E;2017-09-16/09:27:31;.0783;.0103
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.0016
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select Monitor('SYSTEM',100,10000000) from dual ;2017-09-16/09:28:29;.0149;.5878
+MAIKOL;select (Monitor('USERS',10.000000,0.000000)) from dual;2017-09-16/10:48:42;.0149;.1303
+MAIKOL;select (Monitor('USERS',10.000000,8388608.000000)) from dual;2017-09-16/10:48:53;.0149;.1105
+MAIKOL;select (Monitor('USERS',10.000000,8388608.000000)) from dual;2017-09-16/10:48:53;.0149;.2285
+MAIKOL;select (Monitor('USERS',10.000000,8388608.000000)) from dual;2017-09-16/10:48:53;.0149;.4402
+MAIKOL;select (Monitor('USERS',10.000000,8388608.000000)) from dual;2017-09-16/10:48:53;.0149;.4402
+MAIKOL;select (Monitor('USERS',10.000000,8388608.000000)) from dual;2017-09-16/10:48:53;.0149;.4402
+MAIKOL;select (Monitor('USERS',10.000000,8388608.000000)) from dual;2017-09-16/10:48:53;.0149;.4402
+MAIKOL;select (Monitor('USERS',10.000000,18874368.000000)) from dual;2017-09-16/11:20:22;.0149;.2247
+MAIKOL;select (Monitor('USERS',10.000000,18874368.000000)) from dual;2017-09-16/11:20:22;.0149;.7128
+MAIKOL;select (Monitor('USERS',10.000000,18874368.000000)) from dual;2017-09-16/11:20:22;.0149;.7128
